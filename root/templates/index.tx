@@ -1,1 +1,6 @@
-DuckDuckDocs
+<div id='sidebar'>
+    DuckDuck
+</div>
+<div id='container'>
+    Docs
+</div>
