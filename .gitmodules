@@ -1,0 +1,3 @@
+[submodule "sources/DuckDuckGo-Documentation"]
+	path = sources/DuckDuckGo-Documentation
+	url = git@github.com:duckduckgo/DuckDuckGo-Documentation

@@ -1,6 +1,12 @@
 <div id='sidebar'>
-    DuckDuck
+    <h1>DuckDuck</h1>
+    <: mark_raw(build_menu($docs)) :>
 </div>
 <div id='container'>
-    Docs
+    <h1>Docs</h1>
+    : for $docs.kv() -> $pair {
+        <div id='<: $pair.key :>'>
+            <: mark_raw($pair.value) :>
+        </div>
+    : }
 </div>

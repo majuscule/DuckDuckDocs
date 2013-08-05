@@ -2,13 +2,21 @@
     width: 200px;
     border-right: 1px solid #BBBBBB;
     box-shadow: 0 0 20px #CCCCCC;
-    padding: 15px 0 30px 30px;
+    padding: 0 0 30px 30px;
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
 }
 
+#sidebar ul {
+    padding-left: 0px;
+}
+
+#menu {
+    list-style: none;
+}
+
 #container {
-    margin: 15px 0 50px 260px;
+    margin: 0 0 50px 260px;
 }

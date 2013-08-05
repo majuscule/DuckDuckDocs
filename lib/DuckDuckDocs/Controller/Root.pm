@@ -1,8 +1,18 @@
 package DuckDuckDocs::Controller::Root;
 use Moose;
 use namespace::autoclean;
+use DuckDuckDocs::Model::Docs;
 
 BEGIN { extends 'Catalyst::Controller' }
+
+#has docs => (
+#    is => 'ro',
+#    default => sub {
+#        DuckDuckDocs::Model::Docs->new(
+#            source_dir => 'sources/DuckDuckGo-Documentation'
+#        )
+#    },
+#);
 
 #
 # Sets the actions in this controller to be registered with no prefix
@@ -28,7 +38,8 @@ The root page (/)
 
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
-    $c->stash(template => 'index.tx');
+    my $docs = $c->model('Docs')->docs;
+    $c->stash(template => 'index.tx', docs => $docs);
 }
 
 =head2 default
