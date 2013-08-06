@@ -11,23 +11,39 @@ my $html = HTML::Tiny->new(mode => 'html');
 
 sub build_menu {
     my %menu;
-    sub recurse {
+    sub _build_menu {
         my ( $docs, $menu ) = @_;
         for (keys %{$docs}) {
             if (ref $docs->{$_} eq 'HASH') {
                 $menu->{$_} = {};
-                recurse($docs->{$_}, $menu->{$_});
+                _build_menu($docs->{$_}, $menu->{$_});
             } else {
                 $menu->{$_} = $docs->{$_};
             }
         }
     };
-    recurse shift, \%menu;
+    _build_menu shift, \%menu;
     $html->ul({ id => 'menu' }, [map {
         $html->li($html->a({ href => "#$_" }, $_))
     } grep {
         1#ref $menu{$_} eq 'HASH'
     } keys %menu]);
+}
+
+sub build_docs {
+    my $body;
+    sub _build_docs {
+        my ( $docs, $body ) = @_;
+        for (keys %{$docs}) {
+            if (ref $docs->{$_} eq 'HASH') {
+                _build_docs($docs->{$_}, $body);
+            } else {
+                $$body .= $html->div({ id => $_ }, $docs->{$_});
+            }
+        }
+    };
+    _build_docs shift, \$body;
+    return $body;
 }
 
 __PACKAGE__->config(

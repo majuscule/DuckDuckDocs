@@ -4,9 +4,5 @@
 </div>
 <div id='container'>
     <h1>Docs</h1>
-    : for $docs.kv() -> $pair {
-        <div id='<: $pair.key :>'>
-            <: mark_raw($pair.value) :>
-        </div>
-    : }
+    <: mark_raw(build_docs($docs)) :>
 </div>
