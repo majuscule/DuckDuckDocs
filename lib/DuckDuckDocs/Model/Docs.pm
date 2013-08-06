@@ -31,7 +31,7 @@ sub _generate {
     my %duckduckdocs;
     find(sub {
         return if not -f "$_" or not /^[^.].+\.md$/;
-        $dir =~ s:^$self->source_dir/?::;
+        $dir =~ s:^$self->{source_dir}/?::;
         my @dirs = split '/', $dir;
         my $ref = \%duckduckdocs;
         for (@dirs) {
