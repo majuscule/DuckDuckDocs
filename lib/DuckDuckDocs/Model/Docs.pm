@@ -15,29 +15,25 @@ use vars qw/*name *dir *prune/;
 *dir    = *File::Find::dir;
 *prune  = *File::Find::prune;
 
+has source_dir => (
+    is => 'ro',
+    required => 1,
+);
+
 has docs => (
     is => 'ro',
+    lazy => 1,
     builder => '_generate',
 );
 
-#has source_dir => (
-#    is => 'ro',
-#    required => 1,
-#);
-
-my $source_dir = 'sources/DuckDuckGo-Documentation';
-
 sub _generate {
-    #my ( $self ) = @_;
-    #warn $self->source_dir;
+    my $self = shift;
     my %duckduckdocs;
     find(sub {
         return if not -f "$_" or not /^[^.].+\.md$/;
-        $dir =~ s:^$source_dir/?::;
+        $dir =~ s:^$self->source_dir/?::;
         my @dirs = split '/', $dir;
         my $ref = \%duckduckdocs;
-        warn $dir if $_ eq 'fathead-overview';
-        warn Dumper \@dirs if $_ eq 'fathead-overview.md';
         for (@dirs) {
             $ref->{$_} = {} if (not exists $ref->{$_});
             $ref = $ref->{$_};
@@ -46,7 +42,7 @@ sub _generate {
         my $html = Text::Markdown::markdown($markdown);
         s/\.md$//;
         $ref->{$_} = $html;
-    }, $source_dir);
+    }, $self->source_dir);
     #warn Dumper \%duckduckdocs;
     return \%duckduckdocs;
 }

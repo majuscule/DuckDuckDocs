@@ -10,6 +10,7 @@ use base 'Catalyst::View::Xslate';
 my $html = HTML::Tiny->new(mode => 'html');
 
 sub build_menu {
+    my $self = shift;
     my %menu;
     sub recurse {
         my ( $docs, $menu ) = @_;
@@ -23,8 +24,8 @@ sub build_menu {
         }
     };
     recurse shift, \%menu;
-    $html->ul({ id => 'menu' }, [map {
-        $html->li($html->a({ href => "#$_" }, $_))
+    $self->html->ul({ id => 'menu' }, [map {
+        $self->html->li($self->html->a({ href => "#$_" }, $_))
     } grep {
         1#ref $menu{$_} eq 'HASH'
     } keys %menu]);
